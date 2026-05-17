@@ -10,11 +10,7 @@ function App() {
   return (
     <>
       {!bootDone && (
-        <BootAnimation
-          text="Xili_AI"
-          duration={2800}
-          onComplete={() => setBootDone(true)}
-        />
+        <BootAnimation onComplete={() => setBootDone(true)} />
       )}
       {bootDone && view === 'landing' && (
         <LandingPage onEnterWorkspace={() => setView('workspace')} />
