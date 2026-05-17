@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import Optional
@@ -6,6 +7,7 @@ from typing import Optional
 from app.database import get_db
 from app.models import Tutorial, Step, Document
 from app.services.llm_service import llm_service
+from app.services.export_service import export_tutorial_to_docx
 
 router = APIRouter(prefix="/api/tutorials", tags=["tutorials"])
 
@@ -75,11 +77,29 @@ async def chat_with_document(
         raise HTTPException(400, detail="Document content not parsed yet")
     
     try:
-        answer = await llm_service.chat_with_document(
+        result = await llm_service.chat_with_document(
             document.content,
             question,
             history
         )
-        return {"answer": answer}
+        return {"answer": result["answer"], "reasoning": result.get("reasoning", "")}
     except Exception as e:
         raise HTTPException(500, detail=str(e))
+
+@router.get("/{tutorial_id}/export")
+async def export_tutorial(tutorial_id: int, db: AsyncSession = Depends(get_db)):
+    """Export tutorial as Word document."""
+    result = await db.execute(select(Tutorial).where(Tutorial.id == tutorial_id))
+    tutorial = result.scalar_one_or_none()
+    if not tutorial:
+        raise HTTPException(404, detail="Tutorial not found")
+    
+    try:
+        file_path = await export_tutorial_to_docx(db, tutorial_id)
+        return FileResponse(
+            file_path,
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            filename=f"{tutorial.title}.docx",
+        )
+    except Exception as e:
+        raise HTTPException(500, detail=f"Export failed: {str(e)}")

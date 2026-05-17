@@ -1,3 +1,5 @@
+import aiofiles
+
 async def parse_document(file_path: str, file_type: str) -> str:
     """Parse uploaded document and extract text content."""
     ext = file_type.lower()
@@ -35,10 +37,10 @@ async def _parse_docx(file_path: str) -> str:
 
 async def _parse_text(file_path: str) -> str:
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
+        async with aiofiles.open(file_path, "r", encoding="utf-8") as f:
+            return await f.read()
     except UnicodeDecodeError:
-        with open(file_path, "r", encoding="gbk") as f:
-            return f.read()
+        async with aiofiles.open(file_path, "r", encoding="gbk") as f:
+            return await f.read()
     except Exception as e:
         raise ValueError(f"Text parsing error: {str(e)}")

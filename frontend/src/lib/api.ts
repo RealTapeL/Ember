@@ -16,6 +16,7 @@ export interface DocumentItem {
   status: string;
   file_type: string;
   file_size: number;
+  category: string;
   created_at: string;
   error_message?: string;
 }
@@ -41,6 +42,13 @@ export interface StepDetail {
   order: number;
   title: string;
   description: string;
+  content: string;
+}
+
+export interface DocumentContent {
+  id: number;
+  original_name: string;
+  file_type: string;
   content: string;
 }
 
@@ -73,6 +81,20 @@ export const getDocument = async (id: number): Promise<DocumentItem> => {
   return response.data;
 };
 
+export const updateDocumentCategory = async (id: number, category: string) => {
+  const response = await api.put(`/api/documents/${id}?category=${encodeURIComponent(category)}`);
+  return response.data;
+};
+
+export const getDocumentContent = async (id: number): Promise<DocumentContent> => {
+  const response = await api.get(`/api/documents/${id}/content`);
+  return response.data;
+};
+
+export const getDocumentFileUrl = (id: number) => {
+  return `${API_BASE_URL}/api/documents/${id}/file`;
+};
+
 export const getTutorialByDocument = async (documentId: number): Promise<TutorialData> => {
   const response = await api.get(`/api/tutorials/document/${documentId}`);
   return response.data;
@@ -88,11 +110,20 @@ export const deleteDocument = async (id: number) => {
   return response.data;
 };
 
-export const chatWithDocument = async (documentId: number, question: string, history?: any[]) => {
+export interface ChatResponse {
+  answer: string;
+  reasoning: string;
+}
+
+export const chatWithDocument = async (documentId: number, question: string, history?: any[], signal?: AbortSignal): Promise<ChatResponse> => {
   const response = await api.post(`/api/tutorials/chat/${documentId}?question=${encodeURIComponent(question)}`, {
     history: history || [],
-  });
+  }, { signal });
   return response.data;
+};
+
+export const exportTutorialUrl = (tutorialId: number) => {
+  return `${API_BASE_URL}/api/tutorials/${tutorialId}/export`;
 };
 
 export default api;

@@ -8,17 +8,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        indigo: {
-          900: '#1e293b',
-          950: '#0f172a',
-        },
-        amber: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-        },
-        cream: {
-          50: '#fffbeb',
-          100: '#fef3c7',
+        pixel: {
+          bg: 'var(--pixel-bg)',
+          card: 'var(--pixel-card)',
+          border: 'var(--pixel-border)',
+          'border-light': 'var(--pixel-border-light)',
+          primary: 'var(--pixel-primary)',
+          primaryDark: 'var(--pixel-primary-dark)',
+          secondary: 'var(--pixel-secondary)',
+          text: 'var(--pixel-text)',
+          muted: 'var(--pixel-muted)',
+          danger: 'var(--pixel-danger)',
+          success: 'var(--pixel-success)',
+          warning: 'var(--pixel-warning)',
+          shadow: 'var(--pixel-shadow)',
+          glow: 'var(--pixel-glow)',
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -43,22 +47,38 @@ export default {
         },
       },
       fontFamily: {
-        wenkai: ['"Noto Serif SC"', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
-        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+        pixel: ['"Press Start 2P"', '"LXGW WenKai"', '"Courier New"', 'monospace'],
+        body: ['"LXGW WenKai"', '"Inter"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+        display: ['"LXGW WenKai"', '"Inter"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+        sans: ['"LXGW WenKai"', '"Inter"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
       },
       animation: {
-        'bounce-slow': 'bounce 2s infinite',
+        'blink': 'blink 1s step-end infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'scanline': 'scanline 8s linear infinite',
+        'pulse-pixel': 'pulsePixel 2s steps(2) infinite',
         'scroll-left': 'scrollLeft 30s linear infinite',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
       },
       keyframes: {
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        scanline: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        pulsePixel: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.6' },
+        },
         scrollLeft: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(245, 158, 11, 0.3)' },
-          '50%': { boxShadow: '0 0 40px rgba(245, 158, 11, 0.6)' },
         },
       },
     },

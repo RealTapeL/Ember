@@ -22,8 +22,8 @@ export default function ProgressRing({
       <svg width={size} height={size} className="-rotate-90">
         <defs>
           <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#1e293b" />
-            <stop offset="100%" stopColor="#f59e0b" />
+            <stop offset="0%" stopColor="var(--pixel-border)" />
+            <stop offset="100%" stopColor="var(--pixel-primary)" />
           </linearGradient>
         </defs>
         <circle
@@ -31,7 +31,7 @@ export default function ProgressRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#1e293b"
+          stroke="var(--pixel-border)"
           strokeWidth={strokeWidth}
         />
         <circle
@@ -47,7 +47,7 @@ export default function ProgressRing({
           style={{ transition: 'stroke-dashoffset 0.3s ease-out' }}
         />
       </svg>
-      <span className="absolute text-xl font-semibold text-amber-400">
+      <span className="absolute text-xl font-semibold text-pixel-primary">
         {progress}%
       </span>
     </div>

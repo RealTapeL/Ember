@@ -4,13 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>知识传承工坊</title>
+    <title>矽励科技 | 知识库</title>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          if (!theme) theme = 'light';
+          if (theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
     <style>
-      .font-wenkai {
-        font-family: 'Noto Serif SC', 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', serif;
+      .font-pixel {
+        font-family: 'Press Start 2P', 'LXGW WenKai', 'Courier New', monospace;
+      }
+      .font-body {
+        font-family: 'LXGW WenKai', 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      .font-display {
+        font-family: 'LXGW WenKai', 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
       }
     </style>
   </head>
